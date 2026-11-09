@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>XPayr Developer Documentation Hub — REST API v1, Webhooks, SDKs, Plugins &amp; AI Agent Commerce</title>
+    <meta name="description" content="Official developer documentation for XPayr Non-Custodial Crypto Payment Gateway: API v1 Authentication, Dual Checkout Sessions, HMAC-SHA256 Webhooks, AI Agent Commerce, Postman Collections, and 26 Open-Source Repositories." />
+    <link rel="canonical" href="https://docs.xpayr.com/" />
+    <link rel="icon" type="image/png" href="./assets/xpayr-icon.png" />
+    <link rel="apple-touch-icon" href="./assets/xpayr-icon.png" />
+    <link rel="alternate" type="text/plain" title="LLM Summary Context" href="https://docs.xpayr.com/llms.txt" />
+    <link rel="alternate" type="text/plain" title="LLM Full API Reference" href="https://docs.xpayr.com/llms-full.txt" />
+    <meta property="og:title" content="XPayr Official Developer Documentation Hub (docs.xpayr.com)" />
+    <meta property="og:description" content="Complete technical reference for XPayr API v1, Dual Checkout (Web3 1-Click + Exchange QR), Signed Webhooks, AI Agent Commerce, and 21-Tool MCP Server." />
+    <meta property="og:url" content="https://docs.xpayr.com/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="https://docs.xpayr.com/assets/xpayr-logo-white.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="XPayr Official Developer Documentation Hub (docs.xpayr.com)" />
+    <meta name="twitter:description" content="Non-custodial multi-chain crypto payment gateway documentation: REST API v1, HMAC-SHA256 Webhooks, SDKs, and MCP Server." />
+    <meta name="twitter:image" content="https://docs.xpayr.com/assets/xpayr-logo-white.png" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "TechArticle",
+      "headline": "XPayr Official Developer Documentation & API v1 Reference",
+      "description": "Official technical documentation for integrating XPayr non-custodial multi-chain cryptocurrency checkout, HMAC-SHA256 webhooks, e-commerce plugins, and policy-controlled AI agent commerce.",
+      "url": "https://docs.xpayr.com/",
+      "author": {
+        "@type": "Organization",
+        "name": "XPayr",
+        "url": "https://xpayr.com",
+        "logo": "https://docs.xpayr.com/assets/xpayr-logo-white.png",
+        "sameAs": [
+          "https://github.com/xpayrcom",
+          "https://mcp.xpayr.com",
+          "https://xpayrcom.github.io",
+          "https://www.npmjs.com/package/@xpayr/mcp-server"
+        ]
+      }
+    }
+    </script>
+    <style>
+        :root {
+            --bg-main: #06101c;
+            --bg-card: #0c1d31;
+            --bg-code: #040b14;
+            --border: rgba(56, 189, 248, 0.18);
+            --text-primary: #f1f7ff;
+            --text-muted: #94b2d3;
+            --accent: #029bfd;
+            --accent-bright: #38bdf8;
+            --success: #10b981;
+            --warning: #f59e0b;
+        }
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', Roboto, sans-serif;
+            background: radial-gradient(circle at 12% 8%, rgba(2, 155, 253, 0.16), transparent 34%),
+                        radial-gradient(circle at 88% 12%, rgba(16, 185, 129, 0.12), transparent 32%),
+                        var(--bg-main);
+            color: var(--text-primary);
+            line-height: 1.65;
+        }
+        a { color: var(--accent-bright); text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        .wrap { width: min(1240px, calc(100% - 36px)); margin: 0 auto; }
+        header.topbar {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            backdrop-filter: blur(14px);
+            background: rgba(6, 16, 28, 0.88);
+            border-bottom: 1px solid var(--border);
+            padding: 14px 0;
+        }
+        .topbar-inner { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+        .brand { display: flex; align-items: center; gap: 10px; font-weight: 900; font-size: 18px; color: #fff; text-decoration: none !important; }
+        .brand-badge { background: linear-gradient(135deg, #10b981, #029bfd); color: #fff; padding: 3px 10px; border-radius: 999px; font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; }
+        .nav-links { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; font-size: 14px; font-weight: 600; }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 18px;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 14px;
+            border: 1px solid transparent;
+            cursor: pointer;
+            text-decoration: none !important;
+            transition: all 0.18s ease;
+        }
+        .btn-primary { background: linear-gradient(135deg, #029bfd, #0284c7); color: #fff; box-shadow: 0 10px 28px rgba(2, 155, 253, 0.28); }
+        .btn-ghost { background: rgba(56, 189, 248, 0.09); color: var(--text-primary); border-color: var(--border); }
+        .btn-amber { background: linear-gradient(135deg, #f59e0b, #d97706); color: #040b14; }
+        .hero { padding: 56px 0 40px; border-bottom: 1px solid var(--border); }
+        .kicker { display: inline-flex; align-items: center; gap: 8px; color: var(--accent-bright); font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; background: rgba(2, 155, 253, 0.12); padding: 6px 12px; border-radius: 999px; border: 1px solid var(--border); }
+        h1 { font-size: clamp(32px, 4.5vw, 54px); line-height: 1.08; margin: 16px 0; letter-spacing: -0.02em; }
+        .hero-sub { font-size: 17.5px; color: var(--text-muted); max-width: 880px; margin-bottom: 24px; }
+        .badges-row { display: flex; flex-wrap: wrap; gap: 10px; margin: 18px 0 10px; }
+        .section { padding: 48px 0; border-bottom: 1px solid var(--border); }
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+        .card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px; padding: 22px; }
+        .card h3 { margin: 0 0 8px; font-size: 18px; color: #fff; }
+        .card p { margin: 0 0 14px; font-size: 14px; color: var(--text-muted); }
+        pre {
+            background: var(--bg-code);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 16px;
+            overflow-x: auto;
+            color: #dbeafe;
+            font: 12.5px/1.6 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+            margin: 10px 0 0;
+        }
+        code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.92em; color: #7dd3fc; }
+        footer { padding: 40px 0; text-align: center; color: var(--text-muted); font-size: 14px; }
+        @media (max-width: 920px) { .grid-2, .grid-3 { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <header class="topbar">
+        <div class="wrap topbar-inner">
+            <a class="brand" href="https://xpayr.com">
+                <img src="./assets/xpayr-logo-white.png" alt="XPayr Official Logo" style="height:34px;width:auto;display:block;" />
+                <span class="brand-badge">Developer Docs v1</span>
+            </a>
+            <nav class="nav-links">
+                <a href="#quickstart">API v1 Quickstart</a>
+                <a href="#webhooks">HMAC Webhooks</a>
+                <a href="#agents">AI Agent Commerce</a>
+                <a href="#repositories">26 GitHub Repos</a>
+                <a href="https://mcp.xpayr.com/" target="_blank" rel="noopener">MCP Portal (21 Tools)</a>
+                <a href="https://xpayr.com/doc-api" target="_blank" rel="noopener">Full API Reference</a>
+                <a class="btn btn-primary" href="https://xpayr.com/merchant/register" target="_blank" rel="noopener">Get Free sk_test Key</a>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="wrap">
+            <span class="kicker">Official Documentation Portal · docs.xpayr.com</span>
+            <h1>XPayr Non-Custodial Crypto Gateway Documentation &amp; OpenAPI Hub.</h1>
+            <p class="hero-sub">
+                Integrate universal multi-chain crypto checkout (<strong>Web3 1-Click Wallet Pay + Direct Exchange QR Transfer</strong>) across <strong>TRON, Solana, BNB Smart Chain, Base, Polygon, Arbitrum, Optimism, Ethereum &amp; Circle Arc</strong> at a flat <strong>0.5% fee</strong> with zero custody delay.
+            </p>
+            <div class="badges-row">
+                <a class="btn btn-amber" href="https://xpayr.com/tools/testnet-checkout-simulator" target="_blank" rel="noopener">⚡ Try Live Demo Checkout ($10 Testnet USDT)</a>
+                <a class="btn btn-primary" href="https://mcp.xpayr.com/" target="_blank" rel="noopener">🤖 AI &amp; MCP Server Portal (mcp.xpayr.com)</a>
+                <a class="btn btn-ghost" href="./postman/xpayr_gateway_v1.postman_collection.json" download>📦 Postman Collection v1</a>
+                <a class="btn btn-ghost" href="./openapi.json" target="_blank" rel="noopener">📄 OpenAPI 3.1.0 JSON</a>
+                <a class="btn btn-ghost" href="./llms-full.txt" target="_blank" rel="noopener">🧠 llms-full.txt</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="quickstart" class="section">
+        <div class="wrap">
+            <span class="kicker">Core REST API v1</span>
+            <h2 style="margin:8px 0 20px;">1. Authentication &amp; Creating a Dual Checkout Session</h2>
+            <div class="grid-2">
+                <div class="card">
+                    <h3>Authentication &amp; Environment Keys</h3>
+                    <p>Authenticate all requests to <code>https://xpayr.com/api/v1</code> using the HTTP <code>Authorization: Bearer &lt;key&gt;</code> header:</p>
+                    <ul style="font-size:14px;color:var(--text-muted);padding-left:18px;">
+                        <li><code>sk_test_...</code> — Testnet Secret Key (BSC Testnet, Polygon Amoy, TRON Nile, Solana Devnet, Arc Testnet)</li>
+                        <li><code>sk_live_...</code> — Mainnet Production Secret Key (0.5% flat fee, 99.5% direct to merchant wallet)</li>
+                        <li><code>agk_test_...</code> / <code>agk_live_...</code> — Scoped AI Commerce Agent Key for <code>POST /api/v1/agent-intents</code></li>
+                    </ul>
+                    <p style="margin-top:12px;">
+                        <a href="https://github.com/xpayrcom/xpayr-docs/blob/main/docs/authentication.md" target="_blank" rel="noopener">Read docs/authentication.md &rarr;</a>
+                    </p>
+                </div>
+                <div class="card">
+                    <h3>Create a Payment Session (<code>POST /api/v1/payments</code>)</h3>
+                    <p>Supports multi-chain selection (`is_multi_chain`), 1-year reusable links (`is_reusable`), and HTML email invoices (`send_invoice_email`):</p>
+                    <pre>curl -X POST "https://xpayr.com/api/v1/payments" \
+  -H "Authorization: Bearer sk_test_your_secret_key" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "amount": 49.90,
+    "currency": "USDT",
+    "network": "tron-mainnet",
+    "order_id": "ORD-1001",
+    "is_multi_chain": true,
+    "send_invoice_email": true,
+    "customer_email": "buyer@example.com"
+  }'</pre>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="webhooks" class="section">
+        <div class="wrap">
+            <span class="kicker">Security &amp; Event Verification</span>
+            <h2 style="margin:8px 0 20px;">2. Signed HMAC-SHA256 Webhooks &amp; AI Agent Commerce</h2>
+            <div class="grid-2">
+                <div class="card" id="webhook-guide">
+                    <h3>Verify <code>X-XPayr-Signature</code> (HMAC-SHA256)</h3>
+                    <p>Every webhook event (<code>payment.completed</code>, <code>payment.expired</code>, <code>payment.failed</code>, <code>test.webhook</code>) is signed with your 32-byte webhook secret:</p>
+                    <pre>import crypto from 'node:crypto';
+
+export function verifyXpayrWebhook(rawBody, signatureHeader, webhookSecret) {
+  const expected = 'sha256=' + crypto
+    .createHmac('sha256', webhookSecret)
+    .update(rawBody, 'utf8')
+    .digest('hex');
+  return crypto.timingSafeEqual(
+    Buffer.from(expected),
+    Buffer.from(String(signatureHeader || ''))
+  );
+}</pre>
+                    <p style="margin-top:12px;">
+                        <a href="https://github.com/xpayrcom/xpayr-docs/blob/main/docs/webhooks.md" target="_blank" rel="noopener">Read docs/webhooks.md &rarr;</a>
+                    </p>
+                </div>
+                <div class="card" id="agents">
+                    <h3>Policy-Controlled AI Agent Commerce</h3>
+                    <p>Allow autonomous AI agents to submit payment intents evaluated against per-transaction caps, daily limits, and human-in-the-loop approval queues:</p>
+                    <pre># Install Official 21-Tool MCP Server in Claude / Cursor / Cline
+npx -y @xpayr/mcp-server --suite all
+
+# Submit an AI Agent Payment Intent via REST API v1
+curl -X POST "https://xpayr.com/api/v1/agent-intents" \
+  -H "Authorization: Bearer agk_test_your_agent_key" \
+  -H "Content-Type: application/json" \
+  -d '{"amount":19.99,"currency":"USDC","network":"arc-testnet","reason":"GPU Invoice #402"}'</pre>
+                    <p style="margin-top:12px;">
+                        <a href="https://github.com/xpayrcom/xpayr-docs/blob/main/guides/agent-commerce-mode.md" target="_blank" rel="noopener">Read guides/agent-commerce-mode.md &rarr;</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="repositories" class="section">
+        <div class="wrap">
+            <span class="kicker">Open-Source Ecosystem (`github.com/xpayrcom`)</span>
+            <h2 style="margin:8px 0 20px;">3. Official SDKs, E-Commerce Gateways &amp; Reference Kits</h2>
+            <div class="grid-3">
+                <div class="card">
+                    <h3>🤖 AI Agents &amp; MCP Server</h3>
+                    <p>Official 21-tool Model Context Protocol server published on NPM and the Official Anthropic MCP Registry.</p>
+                    <p>
+                        <a href="https://github.com/xpayrcom/xpayr-mcp-server">xpayrcom/xpayr-mcp-server</a><br/>
+                        <a href="https://mcp.xpayr.com">mcp.xpayr.com</a> · <a href="https://xpayrcom.github.io">xpayrcom.github.io</a>
+                    </p>
+                </div>
+                <div class="card">
+                    <h3>📦 Official SDKs &amp; License Kit</h3>
+                    <p>Production SDKs for Node.js, PHP, Laravel, and non-custodial wallet-based software licensing.</p>
+                    <p>
+                        <a href="https://github.com/xpayrcom/xpayr-node-sdk">xpayr-node-sdk</a> ·
+                        <a href="https://github.com/xpayrcom/xpayr-php-sdk">xpayr-php-sdk</a> ·
+                        <a href="https://github.com/xpayrcom/xpayr-extension-kit">xpayr-extension-kit</a> ·
+                        <a href="https://github.com/xpayrcom/xpayr-laravel-example">xpayr-laravel-example</a>
+                    </p>
+                </div>
+                <div class="card">
+                    <h3>🛒 6 E-Commerce Plugins</h3>
+                    <p>Drop-in non-custodial crypto checkout gateways for major self-hosted e-commerce platforms.</p>
+                    <p>
+                        <a href="https://github.com/xpayrcom/xpayr-woocommerce-gateway">WooCommerce</a> ·
+                        <a href="https://github.com/xpayrcom/xpayr-prestashop-gateway">PrestaShop</a> ·
+                        <a href="https://github.com/xpayrcom/xpayr-magento2-gateway">Magento 2</a> ·
+                        <a href="https://github.com/xpayrcom/xpayr-shopware6-gateway">Shopware 6</a> ·
+                        <a href="https://github.com/xpayrcom/xpayr-opencart-gateway">OpenCart</a> ·
+                        <a href="https://github.com/xpayrcom/xpayr-zencart-gateway">Zen Cart</a>
+                    </p>
+                </div>
+                <div class="card">
+                    <h3>⚡ Circle Arc &amp; Agent Kits</h3>
+                    <p>Sub-second finality USDC agent payment and automated reconciliation blueprints on Circle Arc.</p>
+                    <p>
+                        <a href="https://github.com/xpayrcom/xpayr-agent-payments-arc-testnet">xpayr-agent-payments-arc-testnet</a> ·
+                        <a href="https://github.com/xpayrcom/xpayr-reconciliation-arc-testnet">xpayr-reconciliation-arc-testnet</a> ·
+                        <a href="https://github.com/xpayrcom/xpayr-arc-testnet-examples">xpayr-arc-testnet-examples</a>
+                    </p>
+                </div>
+                <div class="card">
+                    <h3>🔐 Webhooks, Evidence &amp; GIWA</h3>
+                    <p>HMAC-SHA256 webhook receivers, on-chain payment evidence verification, and GIWA chain agent pay.</p>
+                    <p>
+                        <a href="https://github.com/xpayrcom/xpayr-webhook-examples">xpayr-webhook-examples</a> ·
+                        <a href="https://github.com/xpayrcom/xpayr-payment-evidence">xpayr-payment-evidence</a> ·
+                        <a href="https://github.com/xpayrcom/xpayr-verified-agentpay-giwa">xpayr-verified-agentpay-giwa</a>
+                    </p>
+                </div>
+                <div class="card">
+                    <h3>🧰 API Examples &amp; Widgets</h3>
+                    <p>Ready-to-run USDT payment examples, embeddable checkout widgets, and Postman collections.</p>
+                    <p>
+                        <a href="https://github.com/xpayrcom/xpayr-api-examples">xpayr-api-examples</a> ·
+                        <a href="https://github.com/xpayrcom/accept-usdt-payments-example">accept-usdt-payments-example</a> ·
+                        <a href="https://github.com/xpayrcom/crypto-checkout-widget-example">crypto-checkout-widget-example</a> ·
+                        <a href="https://github.com/xpayrcom/xpayr-postman-collection">xpayr-postman-collection</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="wrap">
+            <div style="display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap;margin-bottom:16px;">
+                <a href="https://xpayr.com" target="_blank" rel="noopener">
+                    <img src="./assets/xpayr-logo-white.png" alt="XPayr Official Logo" style="height:30px;width:auto;display:block;" />
+                </a>
+                <a href="https://xpayr.com/brand-assets" target="_blank" rel="noopener">
+                    <img src="https://xpayr.com/partner-badge.php?type=powered_by&amp;theme=dark" alt="Powered by XPayr" style="height:28px;width:auto;display:block;" />
+                </a>
+                <a href="https://xpayr.com/developers" target="_blank" rel="noopener">
+                    <img src="https://xpayr.com/partner-badge.php?type=developer&amp;theme=dark" alt="XPayr Certified Developer" style="height:28px;width:auto;display:block;" />
+                </a>
+            </div>
+            <p>
+                <strong>XPayr Official Documentation Hub (`docs.xpayr.com`)</strong> ·
+                <a href="https://xpayr.com">xpayr.com</a> ·
+                <a href="https://mcp.xpayr.com">mcp.xpayr.com</a> ·
+                <a href="https://xpayrcom.github.io">xpayrcom.github.io</a> ·
+                <a href="https://xpayr.com/developers">Developer Hub</a> ·
+                <a href="https://xpayr.com/doc-api">API Reference</a> ·
+                <a href="https://github.com/xpayrcom">GitHub (@xpayrcom)</a> ·
+                <a href="./llms.txt">llms.txt</a> ·
+                <a href="./llms-full.txt">llms-full.txt</a> ·
+                <a href="./openapi.json">openapi.json</a>
+            </p>
+        </div>
+    </footer>
+</body>
+</html>
