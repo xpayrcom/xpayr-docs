@@ -209,14 +209,14 @@
                     <pre>import crypto from 'node:crypto';
 
 export function verifyXpayrWebhook(rawBody, signatureHeader, webhookSecret) {
-  const expected = 'sha256=' + crypto
-    .createHmac('sha256', webhookSecret)
-    .update(rawBody, 'utf8')
-    .digest('hex');
-  return crypto.timingSafeEqual(
-    Buffer.from(expected),
-    Buffer.from(String(signatureHeader || ''))
-  );
+  // Fail closed: never verify against an empty or missing secret.
+  if (typeof webhookSecret !== 'string' || webhookSecret.length === 0) {
+    throw new Error('XPAYR_WEBHOOK_SECRET is not configured');
+  }
+  const received = String(signatureHeader || '').trim().toLowerCase().replace(/^sha256=/, '');
+  if (!/^[a-f0-9]{64}$/.test(received)) return false;
+  const expected = crypto.createHmac('sha256', webhookSecret).update(rawBody).digest();
+  return crypto.timingSafeEqual(expected, Buffer.from(received, 'hex'));
 }</pre>
                     <p style="margin-top:12px;">
                         <a href="https://github.com/xpayrcom/xpayr-docs/blob/main/docs/webhooks.md" target="_blank" rel="noopener">Read docs/webhooks.md &rarr;</a>
